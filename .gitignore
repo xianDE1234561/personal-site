@@ -1,0 +1,15 @@
+# Installed packages and local build archives
+node_modules/
+dist.zip
+*.zip
+
+# Local environment configuration (keep the safe example file)
+.env
+.env.*
+!.env.example
+
+# Logs and editor files
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
