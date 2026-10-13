@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17121e">
+  <meta name="description" content="欢迎来到 SONG 的个人影像空间。浏览精选影像、动漫与游戏收藏，以及猪蹄的日常相册。">
+  <title>SONG — 留住心动瞬间</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#gallery">跳到影像浏览</a>
+  <header class="header">
+    <a class="brand" href="#home" aria-label="SONG 首页"><img class="brand-avatar" src="assets/SONG.gif" alt="SONG 的个人头像"> SONG<span class="brand-dot">.</span></a>
+    <nav aria-label="主导航"><a href="#collections">相册</a><a href="#gallery">影像</a><a href="#about">关于</a></nav>
+    <a class="contact-link" href="#contact">打个招呼 <span>↗</span></a>
+  </header>
+  <main>
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <img class="hero-image" src="assets/slide-06.webp" alt="雨夜街道上，撑着伞的行人走过霓虹灯光" fetchpriority="high">
+      <img class="hero-image hero-overlay" alt="" aria-hidden="true">
+      <div class="hero-shade"></div>
+      <div class="hero-content"><p class="eyebrow"><span class="status-dot"></span> A PERSONAL VISUAL SPACE</p><h1 id="hero-title">留住，<br>心动瞬间<span class="accent">。</span></h1><p class="hero-description">一些风景，一些想象，一些日常。<br>欢迎走进 SONG 的小小世界。</p><a class="hero-cta" href="#gallery">探索影像 <span>↗</span></a></div>
+      <div class="hero-bottom"><span class="hero-wordmark">SONG</span><div class="hero-caption"><span id="hero-caption">雨中的街道</span><div class="slide-controls"><button id="hero-prev" aria-label="上一张精选影像">←</button><span id="hero-counter">06 / 08</span><button id="hero-next" aria-label="下一张精选影像">→</button></div></div><a href="#collections" class="scroll-hint">向下探索 <span>↓</span></a></div>
+    </section>
+    <section class="intro section-pad" id="collections">
+      <div class="section-top"><span class="eyebrow muted">01 / COLLECTIONS</span><span class="small-note">从喜欢的事物开始</span></div>
+      <div class="section-heading"><h2>三个相册，<br>三种心情<span class="accent">。</span></h2><p>在虚构的世界里漫游，<br>也在普通的日子里，发现值得留下的片刻。</p></div>
+      <div class="collection-grid">
+        <button class="collection-card" data-collection="动漫"><img src="assets/album-01-008.webp" alt="动漫收藏：蓝色调的人物插画" loading="lazy"><span class="card-number">01</span><span class="collection-copy"><span class="eyebrow">ANIMATION / INSPIRATION</span><strong>动漫</strong><span class="card-foot">想象力的另一端 <span>43 张影像 ↗</span></span></span></button>
+        <button class="collection-card" data-collection="游戏"><img src="assets/album-02-040.webp" alt="游戏收藏：Death Stranding 的自然场景" loading="lazy"><span class="card-number">02</span><span class="collection-copy"><span class="eyebrow">GAMES / WORLDS</span><strong>游戏</strong><span class="card-foot">走进另一个世界 <span>51 张影像 ↗</span></span></span></button>
+        <button class="collection-card" data-collection="猪蹄"><img src="assets/album-03-002.webp" alt="猪蹄相册：黑白猫坐在桌边" loading="lazy"><span class="card-number">03</span><span class="collection-copy"><span class="eyebrow">ZHU TI / EVERYDAY</span><strong>猪蹄</strong><span class="card-foot">日常里的小主角 <span>22 张影像 ↗</span></span></span></button>
+      </div>
+    </section>
+    <section class="gallery-section section-pad" id="gallery">
+      <div class="section-top"><span class="eyebrow muted">02 / VISUAL ARCHIVE</span><span class="small-note" id="total-count">正在加载影像</span></div>
+      <div class="archive-heading"><h2>看见喜欢<span class="accent">。</span></h2><p>点开一张，慢慢看。</p></div>
+      <div class="gallery-toolbar"><div class="filters" role="group" aria-label="按相册筛选"><button data-filter="全部" aria-pressed="true" class="active">全部 <span>124</span></button><button data-filter="精选" aria-pressed="false">精选 <span>8</span></button><button data-filter="动漫" aria-pressed="false">动漫 <span>43</span></button><button data-filter="游戏" aria-pressed="false">游戏 <span>51</span></button><button data-filter="猪蹄" aria-pressed="false">猪蹄 <span>22</span></button></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索影像" aria-label="搜索影像"></label></div>
+      <p class="result-info" id="result-info" aria-live="polite"></p>
+      <div class="photo-grid" id="photo-grid" aria-label="影像列表"></div>
+      <p class="empty-state" id="empty-state" hidden>没有找到相关影像。试试其他关键词或相册。</p>
+      <p class="empty-state" id="load-error" hidden>影像暂时无法加载。<button id="retry">重新加载</button></p>
+      <div class="load-more-wrap"><button class="outline-button" id="load-more" hidden>继续浏览 <span>↓</span></button></div>
+      <div class="gallery-note"><span>喜欢的画面，值得被好好收藏。</span><span>SELECTED WITH LOVE ↗</span></div>
+    </section>
+    <section class="about section-pad" id="about"><div class="section-top"><span class="eyebrow muted">03 / ABOUT SONG</span><span class="small-note">屏幕之外，也有生活</span></div><div class="about-layout"><div class="about-visual"><img src="assets/slide-07.webp" alt="湖畔的木屋与暮色中的山峰" loading="lazy"><span class="image-label">A QUIET MOMENT.</span></div><div class="about-copy"><img class="profile-avatar" src="assets/SONG.gif" alt="SONG 的个人头像" loading="lazy"><p class="eyebrow muted">HELLO, I'M</p><h2>SONG<span class="accent">.</span></h2><p>这里是我的个人影像空间。<br>把喜欢的风景、动漫与游戏画面收进相册，<br>也给猪蹄的日常，留一个专属的位置。</p><p class="about-small">随意逛逛，听一首歌，<br>或在下面的地方找到我。</p><div class="social-links"><a href="https://github.com/xianDE1234561" target="_blank" rel="noopener noreferrer">GitHub <span>↗</span></a><a href="https://steamcommunity.com/profiles/76561199732762490/" target="_blank" rel="noopener noreferrer">Steam <span>↗</span></a><a href="https://space.bilibili.com/3747562465004211" target="_blank" rel="noopener noreferrer">Bilibili · 更新账号 <span>↗</span></a></div></div></div></section>
+    <section class="contact section-pad" id="contact"><p class="eyebrow">04 / SAY HELLO</p><div class="contact-heading"><h2>很高兴，<br>在这里遇见你<span>。</span></h2><a class="email-arrow" href="mailto:xsongx6868@gmail.com" aria-label="发送邮件给 SONG">↗</a></div><div class="contact-details"><a href="mailto:xsongx6868@gmail.com"><span>GMAIL</span><strong>xsongx6868@gmail.com ↗</strong></a><a href="mailto:forxiande@outlook.com"><span>OUTLOOK</span><strong>forxiande@outlook.com ↗</strong></a><button class="copy-contact" data-copy="xian61123"><span>WECHAT</span><strong>xian61123 <span class="copy-icon">⧉</span></strong></button><button class="copy-contact" data-copy="3989267150"><span>QQ</span><strong>3989267150 <span class="copy-icon">⧉</span></strong></button></div></section>
+  </main>
+  <footer class="footer"><a class="brand" href="#home">✳ SONG.</a><p>© 2026 SONG · 个人影像与灵感收藏</p><a href="#home">回到顶部 ↑</a></footer>
+  <div class="music-dock" id="music-dock" hidden><button id="music-toggle" aria-label="播放背景音乐" aria-pressed="false"><span id="play-icon">▶</span></button><div class="music-label"><span>ON MY PLAYLIST</span><strong id="track-title"></strong></div><button id="next-track" aria-label="下一首歌">↠</button><button id="music-dismiss" aria-label="收起音乐播放器">×</button><audio id="audio" preload="none"></audio></div>
+  <button class="music-reopen" id="music-reopen" aria-label="打开音乐播放器" hidden>♫</button>
+  <dialog class="lightbox" id="lightbox" aria-label="影像大图浏览"><div class="lightbox-top"><span id="lightbox-category"></span><button id="lightbox-close" aria-label="关闭大图">关闭 ×</button></div><div class="lightbox-stage"><button id="lightbox-prev" aria-label="上一张影像">←</button><img id="lightbox-image" alt=""><button id="lightbox-next" aria-label="下一张影像">→</button></div><div class="lightbox-bottom"><div><h3 id="lightbox-title"></h3><p id="lightbox-note"></p></div><span id="lightbox-counter"></span><a id="download" download>保存图片 ↓</a></div></dialog>
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>
