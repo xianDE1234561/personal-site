@@ -28,6 +28,10 @@ python -m http.server 4173 --bind 127.0.0.1 --directory docs
 
 ## 原项目
 
+## 留言板
+
+留言保存在本仓库的 [网站留言帖](https://github.com/xianDE1234561/personal-site/issues/1)。访客登录 GitHub 后发表评论，网页读取公开评论并展示，站主在 GitHub 管理留言。网页不包含访问令牌；读取失败时可直接打开留言帖。
+
 仓库根目录的 `src/`、`public/`、`api/`、`server.js` 等是原有 React / Vite 项目。当前 GitHub Pages 使用 `docs/` 静态版本，不运行管理 API。
 
 ## 个人链接

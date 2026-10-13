@@ -103,3 +103,54 @@ motionPreference.addEventListener('change', () => {
   }
 });
 loadContent();
+// Guestbook comments are read from the public repository. Posting uses GitHub's
+// own signed-in interface; no access credentials are included in this page.
+const guestbookApi = 'https://api.github.com/repos/xianDE1234561/personal-site/issues/1';
+let guestbookPage = 1, guestbookBusy = false;
+async function readGitHub(url) {
+  const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 12000);
+  try {
+    const response = await fetch(url, {headers:{Accept:'application/vnd.github.text+json'},signal:controller.signal,cache:'no-store'});
+    if (!response.ok) throw new Error(response.status === 403 || response.status === 429 ? 'rate-limit' : 'unavailable');
+    return await response.json();
+  } finally {clearTimeout(timeout);}
+}
+function renderComments(comments) {
+  for (const comment of comments.slice().reverse()) {
+    const article = document.createElement('article'); article.className = 'guestbook-comment';
+    const author = comment.user?.login || 'GitHub 用户';
+    const avatar = document.createElement('span'); avatar.className = 'guestbook-avatar'; avatar.textContent = author.charAt(0).toUpperCase(); avatar.setAttribute('aria-hidden','true');
+    const content = document.createElement('div'); content.className = 'guestbook-comment-content';
+    const top = document.createElement('div'); top.className = 'guestbook-comment-top';
+    const name = document.createElement('strong'); name.textContent = author;
+    const date = document.createElement('time'); date.dateTime = comment.created_at;
+    const parsedDate = new Date(comment.created_at); date.textContent = Number.isNaN(parsedDate.getTime()) ? '' : new Intl.DateTimeFormat('zh-CN',{dateStyle:'medium',timeStyle:'short',timeZone:'Asia/Shanghai'}).format(parsedDate);
+    const body = document.createElement('p'); body.textContent = (comment.body_text ?? comment.body ?? '').slice(0,4000);
+    const view = document.createElement('a'); view.href = `https://github.com/xianDE1234561/personal-site/issues/1#issuecomment-${encodeURIComponent(comment.id)}`; view.textContent = '查看 / 回复 ↗'; view.target = '_blank'; view.rel = 'noopener noreferrer';
+    top.append(name,date); content.append(top,body,view); article.append(avatar,content); $('#guestbook-list').append(article);
+  }
+}
+async function loadGuestbook(older=false) {
+  if (guestbookBusy) return;
+  guestbookBusy = true; $('#guestbook-refresh').disabled = true; $('#guestbook-more').disabled = true;
+  $('#guestbook-status').textContent = '正在读取留言…';
+  try {
+    if (!older) {
+      const issue = await readGitHub(guestbookApi);
+      guestbookPage = Math.max(1,Math.ceil(issue.comments / 30));
+      $('#guestbook-list').replaceChildren();
+    }
+    const comments = await readGitHub(`${guestbookApi}/comments?per_page=30&page=${guestbookPage}`);
+    renderComments(comments);
+    $('#guestbook-status').textContent = $('#guestbook-list').children.length ? `已展示 ${$('#guestbook-list').children.length} 条留言` : '还没有留言。来留下第一句问候吧。';
+    $('#guestbook-more').hidden = guestbookPage <= 1; guestbookPage--;
+  } catch (error) {
+    $('#guestbook-status').textContent = error.message === 'rate-limit' ? '读取较频繁，请稍后刷新，或直接在 GitHub 查看留言。' : '暂时无法读取留言。可以刷新重试，或直接在 GitHub 查看。';
+  } finally {guestbookBusy=false; $('#guestbook-refresh').disabled=false; $('#guestbook-more').disabled=false;}
+}
+$('#guestbook-refresh').addEventListener('click',()=>loadGuestbook());
+$('#guestbook-more').addEventListener('click',()=>loadGuestbook(true));
+if ('IntersectionObserver' in window) {
+  const guestbookObserver = new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting)){guestbookObserver.disconnect();loadGuestbook();}},{rootMargin:'250px'});
+  guestbookObserver.observe($('#guestbook'));
+} else {loadGuestbook();}
