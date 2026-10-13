@@ -80,7 +80,7 @@ async function loadContent() {
   try {
     const response = await fetch('content.json'); if (!response.ok) throw new Error('Content unavailable');
     const data = await response.json(); images = data.images; tracks = data.tracks;
-    $('#total-count').textContent = `${images.length} 张影像 / 3 个相册`; render();
+    $('#total-count').textContent = `${images.length} 张影像 / ${new Set(images.filter(item=>item.category!=='精选').map(item=>item.category)).size} 个相册`; render();
     if (tracks.length) { setTrack(0); $('#music-dock').hidden = false; }
   } catch { $('#total-count').textContent = '影像暂时无法加载'; $('#load-error').hidden = false; }
 }
